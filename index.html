@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Start Sida</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     :root {
       --bg-color: #f4f4f4;
@@ -140,7 +141,6 @@
       color: var(--text-color);
     }
 
-    /* NEW panel for shortcuts */
     .shortcut-panel {
       margin-top: 20px;
       background: var(--panel-bg);
@@ -170,7 +170,7 @@
       width: 100%;
     }
     .shortcut-panel .shortcut-button:hover {
-      background: var(--hover-bg); /* SAME hover color as the top shortcuts */
+      background: var(--hover-bg);
     }
 
     .vertical-line {
@@ -214,23 +214,22 @@
     </form>
   </div>
 
-  <!-- New Shortcuts Panel -->
+  <!-- Updated Shortcuts Panel (no target="_blank") -->
   <div class="shortcut-panel">
     <div class="shortcut-column">
-      <a class="shortcut-button" href="https://skidrowcodex.net" target="_blank">Skidrowcodex</a>
-      <a class="shortcut-button" href="https://youtube.com" target="_blank">YouTube</a>
-      <a class="shortcut-button" href="https://twitch.com" target="_blank">Twitch</a>
+      <a class="shortcut-button" href="https://skidrowcodex.net">Skidrowcodex</a>
+      <a class="shortcut-button" href="https://youtube.com">YouTube</a>
+      <a class="shortcut-button" href="https://twitch.com">Twitch</a>
     </div>
     <div class="vertical-line"></div>
     <div class="shortcut-column">
-      <a class="shortcut-button" href="https://tradera.com" target="_blank">Tradera</a>
-      <a class="shortcut-button" href="https://blocket.se" target="_blank">Blocket</a>
-      <a class="shortcut-button" href="https://facebook.com" target="_blank">Facebook</a>
+      <a class="shortcut-button" href="https://tradera.com">Tradera</a>
+      <a class="shortcut-button" href="https://blocket.se">Blocket</a>
+      <a class="shortcut-button" href="https://facebook.com">Facebook</a>
     </div>
   </div>
 
   <script>
-    // Klocka
     function updateTime() {
       const now = new Date();
       const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -239,7 +238,6 @@
     setInterval(updateTime, 1000);
     updateTime();
 
-    // Väderfunktion för val av stad
     function fetchWeather(city) {
       fetch(`https://wttr.in/${city}?format=%t+%C`)
         .then(response => response.text())
@@ -251,23 +249,19 @@
         });
     }
 
-    // Läsa och sätta väder plats från localStorage
     const savedLocation = localStorage.getItem('weatherLocation') || 'Sundsvall';
     document.getElementById('weather-location').value = savedLocation;
     fetchWeather(savedLocation);
 
-    // Väderuppdatering baserat på vald stad
     document.getElementById('weather-location').addEventListener('change', function() {
       const selectedCity = this.value;
-      localStorage.setItem('weatherLocation', selectedCity);  // Spara den valda staden
+      localStorage.setItem('weatherLocation', selectedCity);
       fetchWeather(selectedCity);
     });
 
-    // Autofokus
     window.addEventListener('load', () => {
       document.getElementById('search-input').focus();
 
-      // Ladda inställningar
       if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark');
       } else if (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -275,16 +269,14 @@
       }
     });
 
-    // Inställningar
     document.getElementById('settings').addEventListener('click', (e) => {
       const menu = document.getElementById('settings-menu');
       const button = document.getElementById('settings');
       menu.classList.toggle('show');
       button.classList.toggle('rotate');
-      e.stopPropagation();  // Prevent the click from bubbling up to the body
+      e.stopPropagation();
     });
 
-    // Close the settings menu if clicked outside
     document.body.addEventListener('click', (e) => {
       const menu = document.getElementById('settings-menu');
       const button = document.getElementById('settings');
@@ -294,7 +286,6 @@
       }
     });
 
-    // Växla mörkt/ljust läge
     document.getElementById('toggle-dark').addEventListener('click', () => {
       document.body.classList.toggle('dark');
       const darkMode = document.body.classList.contains('dark');
